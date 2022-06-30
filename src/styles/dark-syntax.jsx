@@ -1,8 +1,8 @@
 export default {
-   "code[class*=language-]": {
+   "code[class*=\"language-\"]": {
       "color": "#f8f8f2",
-      "background": "0 0",
-      "fontFamily": "Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace",
+      "background": "none",
+      "fontFamily": "Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
       "textAlign": "left",
       "whiteSpace": "pre",
       "wordSpacing": "normal",
@@ -17,10 +17,10 @@ export default {
       "msHyphens": "none",
       "hyphens": "none"
    },
-   "pre[class*=language-]": {
+   "pre[class*=\"language-\"]": {
       "color": "#f8f8f2",
-      "background": "#2b2b2b",
-      "fontFamily": "Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace",
+      "background": "#3f3f4680",
+      "fontFamily": "Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
       "textAlign": "left",
       "whiteSpace": "pre",
       "wordSpacing": "normal",
@@ -35,44 +35,44 @@ export default {
       "msHyphens": "none",
       "hyphens": "none",
       "padding": "1em",
-      "margin": ".5em 0",
+      "margin": "0.5em 0",
       "overflow": "auto",
-      "borderRadius": ".3em"
+      "borderRadius": "0.5em",
    },
-   ":not(pre)>code[class*=language-]": {
-      "background": "#2b2b2b",
-      "padding": ".1em",
-      "borderRadius": ".3em",
-      "whiteSpace": "normal"
-   },
-   "cdata": {
-      "color": "#d4d0ab"
+   ":not(pre) > code[class*=\"language-\"]": {
+      "padding": "1em",
+      "background": "#3f3f4680",
+      "borderRadius": "0.5em",
+      "whiteSpace": "normal",
    },
    "comment": {
-      "color": "#d4d0ab"
-   },
-   "doctype": {
       "color": "#d4d0ab"
    },
    "prolog": {
       "color": "#d4d0ab"
    },
+   "doctype": {
+      "color": "#d4d0ab"
+   },
+   "cdata": {
+      "color": "#d4d0ab"
+   },
    "punctuation": {
       "color": "#fefefe"
    },
-   "constant": {
-      "color": "#ffa07a"
-   },
-   "deleted": {
-      "color": "#ffa07a"
-   },
    "property": {
+      "color": "#ffa07a"
+   },
+   "tag": {
+      "color": "#ffa07a"
+   },
+   "constant": {
       "color": "#ffa07a"
    },
    "symbol": {
       "color": "#ffa07a"
    },
-   "tag": {
+   "deleted": {
       "color": "#ffa07a"
    },
    "boolean": {
@@ -81,23 +81,33 @@ export default {
    "number": {
       "color": "#00e0e0"
    },
+   "selector": {
+      "color": "#abe338"
+   },
    "attr-name": {
       "color": "#abe338"
    },
-   "builtin": {
+   "string": {
       "color": "#abe338"
    },
    "char": {
       "color": "#abe338"
    },
+   "builtin": {
+      "color": "#abe338"
+   },
    "inserted": {
       "color": "#abe338"
    },
-   "selector": {
-      "color": "#abe338"
+   "operator": {
+      "color": "#00e0e0"
    },
-   "string": {
-      "color": "#abe338"
+   "entity": {
+      "color": "#00e0e0",
+      "cursor": "help"
+   },
+   "url": {
+      "color": "#00e0e0"
    },
    ".language-css .token.string": {
       "color": "#00e0e0"
@@ -105,40 +115,30 @@ export default {
    ".style .token.string": {
       "color": "#00e0e0"
    },
-   "entity": {
-      "color": "#00e0e0",
-      "cursor": "help"
-   },
-   "operator": {
-      "color": "#00e0e0"
-   },
-   "url": {
-      "color": "#00e0e0"
-   },
    "variable": {
       "color": "#00e0e0"
    },
    "atrule": {
-      "color": "gold"
+      "color": "#ffd700"
    },
    "attr-value": {
-      "color": "gold"
+      "color": "#ffd700"
    },
    "function": {
-      "color": "gold"
+      "color": "#ffd700"
    },
    "keyword": {
       "color": "#00e0e0"
    },
-   "important": {
-      "color": "gold",
-      "fontWeight": "700"
-   },
    "regex": {
-      "color": "gold"
+      "color": "#ffd700"
+   },
+   "important": {
+      "color": "#ffd700",
+      "fontWeight": "bold"
    },
    "bold": {
-      "fontWeight": "700"
+      "fontWeight": "bold"
    },
    "italic": {
       "fontStyle": "italic"
