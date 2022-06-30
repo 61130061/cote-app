@@ -1,6 +1,7 @@
 import QuickMenu from '../components/QuickMenu';
 
 export default function Welcome () {
+
    return (
       <div className="flex flex-1 flex-col justify-center items-center p-5">
          <div className="text-3xl font-bold my-10">
