@@ -58,7 +58,7 @@ article > ul {
 
 article > ul > li {
    display: list-item;
-   padding-left: 10px;
+   padding-left: 9px;
 }
 
 article > ul > li:has(input) {
@@ -120,5 +120,11 @@ article > p {
    margin: 0.5em 0;
 }
 
+article code {
+   background: #ffffff30;
+   padding: 3px 5px;
+   border-radius: 5px;
+   font-size: 14px;
+}
 
 

@@ -1,6 +1,9 @@
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import Editor from "@monaco-editor/react";
+
 import a11yDark from '../styles/dark-syntax';
 
 import NavbarNote from '../components/NavbarNote';
@@ -42,44 +45,73 @@ console.log(hello);
 \`\`\`
 `
 
+const editorOptions = {
+   lineNumbers: 'off',
+   fontSize: 16,
+   wordWrap: 'on',
+   renderLineHighlight: 'none',
+   overviewRulerLanes: 0,
+   hideCursorInOverviewRuler: true,
+   overviewRulerBorder: false,
+   minimap: {
+      enabled: false
+   },
+   scrollbar: {
+   },
+}
+
 export default function Note () {
-  return (
-     <div className="flex flex-col flex-1 p-3">
-        <NavbarNote />
+   const [edit, setEdit] = useState(false);
+   const [article, setArticle] = useState(markdown);
 
-        <div className="self-center w-[95%] md:w-[600px]">
-           <div>
-              <div className="text-4xl font-bold my-5">Untitled note</div>
-              <div className="text-zinc-300 font-bold">discription...</div>
-           </div>
+   return (
+      <div className="flex flex-col flex-1 p-3">
+         <NavbarNote edit={edit} setEdit={setEdit} />
 
-           <article className="mb-32 text-md">
-              <ReactMarkdown 
-                 children={markdown} 
-                 remarkPlugins={[remarkGfm]} 
-                 components={{
-                    code({node, inline, className, children, ...props}) {
-                       const match = /language-(\w+)/.exec(className || '')
-                       return !inline && match ? (
-                          <SyntaxHighlighter
-                             children={String(children).replace(/\n$/, '')}
-                             style={a11yDark}
-                             language={match[1]}
-                             PreTag="div"
-                             {...props}
-                          />
-                       ) : (
-                          <code className={className} {...props}>
-                             {children}
-                          </code>
-                       )
-                    }
-                 }}
-              />
-           </article>
+         <div className="flex flex-col flex-1 self-center w-[95%] md:w-[600px]">
+            <div>
+               <div className="text-4xl font-bold my-5">Untitled note</div>
+               <div className="text-zinc-300 font-bold">discription...</div>
+            </div>
 
-        </div>
+            {edit ?
+               <div className="mt-8 bg-pink-100 flex flex-1">
+                  <Editor
+                     theme="vs-dark"
+                     defaultLanguage="markdown"
+                     defaultValue={article}
+                     onChange={(v, e) => setArticle(v)}
+                     options={editorOptions}
+                  />
+               </div>:
+               <article className="mb-32 text-md">
+                  <ReactMarkdown 
+                     children={article} 
+                     remarkPlugins={[remarkGfm]} 
+                     components={{
+                        code({node, inline, className, children, ...props}) {
+                           const match = /language-(\w+)/.exec(className || '')
+                           return !inline && match ? (
+                              <SyntaxHighlighter
+                                 children={String(children).replace(/\n$/, '')}
+                                 style={a11yDark}
+                                 language={match[1]}
+                                 PreTag="div"
+                                 {...props}
+                              />
+                           ) : (
+                              <code className={className} {...props}>
+                                 {children}
+                              </code>
+                           )
+                        }
+                     }}
+                  />
+               </article>
+            }
 
-     </div>
-  )
+         </div>
+
+      </div>
+   )
 }
