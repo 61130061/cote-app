@@ -1,5 +1,7 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import a11yDark from '../styles/dark-syntax';
 
 import NavbarNote from '../components/NavbarNote';
 
@@ -33,12 +35,13 @@ A table:
 
 Code:
 
-\`\`\`js
+\`\`\`javascript
 const hello = 'Hello world';
-
+// higilight
 console.log(hello);
 \`\`\`
 `
+
 export default function Note () {
   return (
      <div className="flex flex-col flex-1 p-3">
@@ -51,7 +54,28 @@ export default function Note () {
             </div>
 
             <article className="my-10 text-md">
-               <ReactMarkdown children={markdown} remarkPlugins={[remarkGfm]} />
+               <ReactMarkdown 
+                  children={markdown} 
+                  remarkPlugins={[remarkGfm]} 
+                  components={{
+                     code({node, inline, className, children, ...props}) {
+                        const match = /language-(\w+)/.exec(className || '')
+                        return !inline && match ? (
+                           <SyntaxHighlighter
+                              children={String(children).replace(/\n$/, '')}
+                              style={a11yDark}
+                              language={match[1]}
+                              PreTag="div"
+                              {...props}
+                           />
+                        ) : (
+                           <code className={className} {...props}>
+                              {children}
+                           </code>
+                        )
+                     }
+                  }}
+               />
             </article>
 
          </div>

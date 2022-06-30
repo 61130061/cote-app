@@ -110,7 +110,7 @@ article > table > * > tr > th, td {
 
 article > pre {
    display: block;
-   font-family: monospace;
+   font-size: 14px;
    white-space: pre;
    margin: 1em 0;
 }
