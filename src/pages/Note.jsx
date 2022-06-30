@@ -1,3 +1,6 @@
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
 export default function Note () {
    return (
       <div className="flex flex-col flex-1 p-5">
