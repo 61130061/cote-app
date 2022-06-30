@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import Welcome from './pages/Welcome';
+import Sidebar from './components/Sidebar';
 
 function App() {
-   const [count, setCount] = useState(0)
-
    return (
-      <div className="p-5">
-         <header className="App-header">
-            <div className="text-2xl font-bold text-blue-400">Hello world</div>
-         </header>
+      <div className="h-screen w-screen flex">
+         <Sidebar />
+         <div className="flex flex-1 overflow-scroll">
+            <Welcome />
+         </div>
       </div>
    )
 }
