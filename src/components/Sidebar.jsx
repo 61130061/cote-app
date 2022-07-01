@@ -114,7 +114,7 @@ export default function Sidebar () {
 
             <div className="flex flex-col flex-1 overflow-y-scroll no-scrollbar">
                {folderId && notes.filter(e => e.folderId == folderId).map((data, index) =>
-               <div key={index} onClick={() => navigate('/note')} className="flex text-sm">
+               <div key={index} onClick={() => navigate('/note/'+data.id)} className="flex text-sm">
                   <div className="py-3 border-b border-[#ffffff20] w-full hover:cursor-pointer">
                      <div className="font-bold truncate">{data.topic}</div>
                      <div className="text-gray-400 mb-2 line-clamp-2">

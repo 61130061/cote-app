@@ -4,12 +4,11 @@ import { writeTextFile, readTextFile, readDir, BaseDirectory, createDir } from '
 import { appDir, join } from '@tauri-apps/api/path';
 
 import { Store } from './Store';
+import { demoDescription, demoContent } from './demo';
 
 import Welcome from './pages/Welcome';
 import Note from './pages/Note';
 import Sidebar from './components/Sidebar';
-
-const demoDescription = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 
 async function fetchNotes (callback) {
    const initFolder = [{
@@ -21,13 +20,13 @@ async function fetchNotes (callback) {
    const initNotes = [{
       id: 'dafe306c-f8f7-11ec-b939-0242ac120002',
       topic: 'Untitled',
-      desicription: demoDescription,
+      description: demoDescription,
       folderId: 'd4db2500-f8f7-11ec-b939-0242ac120002',
       tags: [
          '2e88fc4a-f910-11ec-b939-0242ac120002',
          '3dbeeb02-f910-11ec-b939-0242ac120002'
       ],
-      markdown: '',
+      markdown: demoContent,
    }]
 
    const initTags = [
@@ -107,7 +106,7 @@ function App() {
             <div className="flex flex-1 overflow-scroll">
                <Routes>
                   <Route path="/" element={<Welcome />} />
-                  <Route path="/note" element={<Note />} />
+                  <Route path="/note/:noteId" element={<Note />} />
                </Routes>
             </div>
          </div>

@@ -1,50 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import Editor from "@monaco-editor/react";
+import { useNavigate, useParams } from 'react-router-dom';
 
 import a11yDark from '../styles/dark-syntax';
 import coteDark from '../styles/MonacoStyle';
+import { useStoreContext } from '../Store';
 
 import NavbarNote from '../components/NavbarNote';
-
-const markdown = `
-# h1
-## h2
-### h3
-
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-## Paragraph
-**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-
-Testing code tag: \`test\`
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
-
-
-Code:
-
-\`\`\`js
-const hello = 'Hello world';
-// higilight
-console.log(hello);
-\`\`\`
-`
 
 const editorOptions = {
    lineNumbers: 'off',
@@ -66,9 +31,13 @@ const editorOptions = {
    },
 }
 
-export default function Note () {
+export default function Note ({ route }) {
+   const { notes, folders } = useStoreContext();
+   const { noteId } = useParams();
+   const navigate = useNavigate();
+
    const [edit, setEdit] = useState(false);
-   const [article, setArticle] = useState(markdown);
+   const [noteData, setNoteData] = useState(notes.find(e=>e.id==noteId));
 
    const handleEditorMount = (editor, monaco) => {
       monaco.editor.defineTheme('cote-dark', coteDark);
@@ -77,12 +46,17 @@ export default function Note () {
 
    return (
       <div className="flex flex-col flex-1 p-3">
-         <NavbarNote edit={edit} setEdit={setEdit} />
+         <NavbarNote 
+            edit={edit} 
+            setEdit={setEdit} 
+            folderName={folders.find(e=>e.id==noteData.folderId).name} 
+            noteTags={noteData.tags}
+         />
 
          <div className="flex flex-col flex-1 self-center w-[95%] md:w-[600px]">
             <div>
-               <div className="text-4xl font-bold my-5">Untitled note</div>
-               <div className="text-zinc-300 font-bold">discription...</div>
+               <div className="text-4xl font-bold my-5">{noteData.topic}</div>
+               <div className="text-zinc-300 font-bold line-clamp-3">{noteData.description}</div>
             </div>
 
             {edit ?
@@ -90,7 +64,7 @@ export default function Note () {
                   <Editor
                      theme="cote-dark"
                      defaultLanguage="markdown"
-                     defaultValue={article}
+                     defaultValue={noteData.markdown}
                      onChange={(v, e) => setArticle(v)}
                      options={editorOptions}
                      onMount={handleEditorMount}
@@ -98,7 +72,7 @@ export default function Note () {
                </div>:
                <article className="mb-32 text-md">
                   <ReactMarkdown 
-                     children={article} 
+                     children={noteData.markdown} 
                      remarkPlugins={[remarkGfm]} 
                      components={{
                         code({node, inline, className, children, ...props}) {
