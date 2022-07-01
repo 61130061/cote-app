@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -32,16 +32,38 @@ const editorOptions = {
 }
 
 export default function Note ({ route }) {
-   const { notes, folders } = useStoreContext();
+   const { notes, folders, setNotes } = useStoreContext();
    const { noteId } = useParams();
    const navigate = useNavigate();
 
    const [edit, setEdit] = useState(false);
    const [noteData, setNoteData] = useState(notes.find(e=>e.id==noteId));
+   const topicRef = useRef();
+
+   useEffect(() => {
+      if (noteData.topic) {
+         topicRef.current.innerText = noteData.topic;
+      }
+   }, []);
 
    const handleEditorMount = (editor, monaco) => {
       monaco.editor.defineTheme('cote-dark', coteDark);
       monaco.editor.setTheme('cote-dark');
+   }
+
+   const handleUpdate = (key, value) => {
+      const newNotes = [...notes];
+      newNotes[newNotes.indexOf(newNotes.find(e=>e.id==noteId))][key] = value;
+      setNotes(newNotes);
+   }
+
+   const handleTyping = (e, key) => {
+      if (e.keyCode == 13) {
+         e.preventDefault();
+         e.target.blur();
+         return
+      }
+      handleUpdate(key, e.target.innerText);
    }
 
    return (
@@ -55,7 +77,13 @@ export default function Note ({ route }) {
 
          <div className="flex flex-col flex-1 self-center w-[95%] md:w-[600px]">
             <div>
-               <div className="text-4xl font-bold my-5">{noteData.topic}</div>
+               <div 
+                  ref={topicRef}
+                  contentEditable={edit}
+                  onKeyDown={(e) => handleTyping(e, 'topic')}
+                  className="text-4xl font-bold my-5"
+               >
+               </div>
                <div className="text-zinc-300 font-bold line-clamp-3">{noteData.description}</div>
             </div>
 

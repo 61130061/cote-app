@@ -100,7 +100,7 @@ function App() {
    }
 
    return (
-      <Store.Provider value={{ folders, notes, tags }} >
+      <Store.Provider value={{ folders, notes, tags, setNotes }} >
          <div className="h-screen w-screen flex">
             <Sidebar />
             <div className="flex flex-1 overflow-scroll">
