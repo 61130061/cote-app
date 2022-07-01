@@ -5,6 +5,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import Editor from "@monaco-editor/react";
 
 import a11yDark from '../styles/dark-syntax';
+import coteDark from '../styles/MonacoStyle';
 
 import NavbarNote from '../components/NavbarNote';
 
@@ -53,16 +54,26 @@ const editorOptions = {
    overviewRulerLanes: 0,
    hideCursorInOverviewRuler: true,
    overviewRulerBorder: false,
+   lineDecorationsWidth: 0,
+   lineNumbersMinChars: 0,
+   folding: false,
+   glyphMargin: false,
    minimap: {
       enabled: false
    },
    scrollbar: {
+      verticalScrollbarSize: 5
    },
 }
 
 export default function Note () {
    const [edit, setEdit] = useState(false);
    const [article, setArticle] = useState(markdown);
+
+   const handleEditorMount = (editor, monaco) => {
+      monaco.editor.defineTheme('cote-dark', coteDark);
+      monaco.editor.setTheme('cote-dark');
+   }
 
    return (
       <div className="flex flex-col flex-1 p-3">
@@ -75,13 +86,14 @@ export default function Note () {
             </div>
 
             {edit ?
-               <div className="mt-8 bg-pink-100 flex flex-1">
+               <div className="mt-8 flex flex-1">
                   <Editor
-                     theme="vs-dark"
+                     theme="cote-dark"
                      defaultLanguage="markdown"
                      defaultValue={article}
                      onChange={(v, e) => setArticle(v)}
                      options={editorOptions}
+                     onMount={handleEditorMount}
                   />
                </div>:
                <article className="mb-32 text-md">
