@@ -134,4 +134,9 @@ article code {
    font-size: 14px;
 }
 
+article a {
+   font-weight: bold;
+   color: #60a5fa;
+}
+
 
